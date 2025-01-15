@@ -29,8 +29,8 @@ This project aims to implement face recognition using dlib on a compact and chea
 The Raspberry Pi runs Raspbian OS. A Python virtual environment is used for installing and isolating libraries required for face recognition. The system uses the `face_recognition` library, along with the following tools:
 
 1. **Python (3.9) with NumPy1.24**: The script runs within a virtual environment which ensures compatibility with dlib without having to downgrade the system-wide version of Python. Installed using `pyenv`.
-2. **Face recognition python library** [face_recognition](https://github.com/ageitgey/face_recognition) - .
-3. **Dlib**: The face recognition library is built using dlib. 
+2. **Face recognition python library**: [face_recognition](https://github.com/ageitgey/face_recognition) - .
+3. **Dlib**: The face recognition library is built using [dlib](https://github.com/davisking/dlib). 
 4. **Flask**: For setting up the video streaming server.
 
 ### **Flask Server**
