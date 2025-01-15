@@ -1,17 +1,16 @@
 # **Camera with Face Recognition**
 
-A smart doorbell system built with a Raspberry Pi Zero W that streams video via a Flask server to an external device for face recognition. This project combines Linux, Python, and Flask to create an intelligent and portable solution for home security.
+A doorbell system built with a Raspberry Pi Zero W that streams video via a Flask server to an external device for face recognition and automatic popups with information about who is outside the door.
 
 ---
 
 ## **Introduction**
-The primary objective of this project is to develop a smart system that recognizes faces and notifies the user when someone is at the door. Initially intended as a handheld camera, the project shifted focus due to hardware limitations on the Raspberry Pi Zero W.
+This project aims to implement face recognition using dlib on a compact and cheap single board computer. Initially intended to run without external computing but shifted focus limited hardware, while maintaining the goal of using having a compact product at the end.
 
 ### **Project Highlights**
-- Streams live video from the Raspberry Pi to a laptop using Flask.
-- External device performs face recognition and sends real-time notifications.
-- Designed to be compact, portable, and battery-powered.
-- Runs entirely on Linux with Python virtual environments for software isolation.
+- Streams live video from the Raspberry Pi using a Flask-server.
+- The users device performs face recognition and sends real-time notifications.
+- Designed to be compact.
 
 ---
 
@@ -20,22 +19,18 @@ The primary objective of this project is to develop a smart system that recogniz
 ### **Component List**
 - **Raspberry Pi Zero W**: The core processor for video streaming.
 - **PiCamera Module (OV5647 sensor)**: Captures video for processing.
-- **LCD 1x16 Display (JHD161A TN)**: (Optional) Displays status messages.
-- **LiPO Battery (1200mAh)**: Powers the system for mobility.
-- **Powerboost 1000c (Adafruit)**: Manages power and charging.
-- **Switch**: Enables convenient system power control.
-- **3D-Printed Casing (PLA)**: Encases the components securely.
+- **Power bank**
 
 ---
 
 ## **Software**
 
-### **Setup**
+### **Dependencies**
 The Raspberry Pi runs Raspbian OS. A Python virtual environment is used for installing and isolating libraries required for face recognition. The system uses the `face_recognition` library, along with the following tools:
 
-1. **Python (3.9)**: Installed using `pyenv` due to compatibility issues with newer Python versions.
-2. **Numpy and Scipy**: Installed with specific versions to ensure compatibility.
-3. **Dlib**: Installed using cross-compilation to overcome hardware limitations.
+1. **Python (3.9) with NumPy1.24**: The script runs within a virtual environment which ensures compatibility with dlib without having to downgrade the system-wide version of Python. Installed using `pyenv`.
+2. **Face recognition python library** [face_recognition](https://github.com/ageitgey/face_recognition) - .
+3. **Dlib**: The face recognition library is built using dlib. 
 4. **Flask**: For setting up the video streaming server.
 
 ### **Flask Server**
