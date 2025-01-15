@@ -20,6 +20,7 @@ This project aims to implement face recognition using dlib on a compact and chea
 - **Raspberry Pi Zero W**: The core processor for video streaming.
 - **PiCamera Module (OV5647 sensor)**: Captures video for processing.
 - **Power bank**
+- **3D-printed housing** - A couple of designs in the `hardware/` directory.
 
 ---
 
@@ -32,56 +33,21 @@ The Raspberry Pi runs Raspbian OS. A Python virtual environment is used for inst
 2. **[face_recognition](https://github.com/ageitgey/face_recognition) python library**: Used for face recognition.
 3. **Dlib**: The face recognition library is built using [dlib](https://github.com/davisking/dlib). 
 4. **Flask**: Video streaming server hosted by the Raspberry Pi.
-
-### **Flask Server**
-The Raspberry Pi runs a Flask server that streams live video. The external device accesses this stream and runs face recognition scripts.
-
 ---
 
 ## **Implementation**
 
-### **Hardware Assembly**
-1. Solder the battery to the power management board and connect it to the Raspberry Pi through a switch.
-2. Assemble the 3D-printed casing to house the components securely.
-3. Attach the PiCamera module and position it for optimal video capture.
-
 ### **Software Workflow**
-1. Set up the Python virtual environment (`venv`) using `pyenv`.
-2. Install dependencies and libraries within the `venv`.
-3. Configure the Flask server to stream video from the camera module.
-4. On the external device, run the face recognition script that processes the video stream and identifies individuals.
+## **On the users computer**
+1. Set up a Python virtual environment using `pyenv`. Make sure the version of python is compatible with dlib.
+2. Install dependencies and libraries within the venv.
+3. Run the script `picam_recog.py` on the users computer.
+## **On the raspberry Pi**
+5. Prepare the Raspberry Pi with SSH and set up the video streaming script `pistream.py` with SCP.
+6. Run the script.
 
 ---
 
 ## **Results**
-- The system successfully streams live video from the Raspberry Pi to an external device.
-- Face recognition is performed in real-time, triggering notifications on the laptop.
+The compact system mounts on a door nicely. Whenever there is a person outside the door the user gets a pop-up containing the name of the person if known, otherwise a photo can be captured and the person added to known people. The system has very hiogh accuracy.
 
----
-
-## **Upcoming Features**
-1. Add a **LiPO battery** to make the system fully wireless.
-2. Automate the startup process by running the Flask server and face recognition script at boot.
-3. Improve notification features with a more advanced user interface, potentially using Tkinter or another GUI framework.
-
----
-
-## **Gallery**
-- Images of the hardware setup.
-- Screenshots of the Flask server video stream.
-- Demonstrations of the face recognition system in action.
-
----
-
-## **License**
-This project is open source under the [MIT License](LICENSE).
-
----
-
-## **Contact**
-For questions or collaboration opportunities, feel free to reach out or submit an issue on this repository.
-
----
-
-## **Acknowledgments**
-Thanks to the open-source community for providing tools and resources that made this project possible.
