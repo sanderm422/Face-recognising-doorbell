@@ -38,11 +38,11 @@ The Raspberry Pi runs Raspbian OS. A Python virtual environment is used for inst
 ## **Implementation**
 
 ### **Software Workflow**
-## **On the users computer**
+#### **On the users computer**
 1. Set up a Python virtual environment using `pyenv`. Make sure the version of python is compatible with dlib.
 2. Install dependencies and libraries within the venv.
 3. Run the script `picam_recog.py` on the users computer.
-## **On the raspberry Pi**
+#### **On the raspberry Pi**
 5. Prepare the Raspberry Pi with SSH and set up the video streaming script `pistream.py` with SCP.
 6. Run the script.
 
