@@ -1,2 +1,2 @@
-python3.9
-numpy1.24
+python < 3.11
+numpy == 1.24
