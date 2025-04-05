@@ -1,11 +1,11 @@
 # **Camera with Face Recognition**
 
-A doorbell system built with a Raspberry Pi Zero W that streams video via a Flask server to an external device for face recognition and automatic popups with information about who is outside the door.
+A video streaming platform built with a Raspberry Pi Zero W streams video via a Flask server to an external device, where a face recognition algorithm built with dlib processes it.
 
 ---
 
 ## **Introduction**
-This project aims to implement face recognition using dlib on a compact and cheap single board computer. Initially intended to run without external computing but shifted focus limited hardware, while maintaining the goal of using having a compact product at the end.
+This project aims to implement face recognition using dlib on a compact and cheap single board computer. Initially intended to run without external computing but shifted focus due to limited hardware, while maintaining the goal of using having a compact product at the end.
 
 ### **Project Highlights**
 - Streams live video from the Raspberry Pi using a Flask-server.
