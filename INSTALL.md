@@ -1,13 +1,13 @@
 # Installation Guide for Face Recognition System
 
 ## Python Compatibility
-- Recommended: **Python 3.10.10**
+- Recommended: **Python 3.10.10**, which can be installed with deadsnakes for Linux.
 - Not compatible with Python 3.11 or newer.
 - Use **numpy 1.24** (not 2.0).
 
-We recommend using a virtual environment:
+Using a virtual environment:
 ```bash
-python3 -m venv venv
+python3.10 -m venv venv
 source venv/bin/activate
 ```
 
