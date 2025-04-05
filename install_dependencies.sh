@@ -7,6 +7,8 @@
 
 echo "Updating package lists..."
 sudo apt update
+echo "Installing cmake"
+sudo apt install cmake
 
 echo "Installing basic build tools..."
 sudo apt install -y build-essential cmake unzip pkg-config
@@ -26,7 +28,8 @@ echo "Upgrading pip inside venv..."
 pip install --upgrade pip
 
 echo "Installing Python libraries inside venv..."
-pip install cmake
+pip uninstall numpy
+pip install numpy==1.24
 pip install dlib
 pip install face_recognition
 pip install opencv-python
