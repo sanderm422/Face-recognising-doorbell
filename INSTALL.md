@@ -1,5 +1,7 @@
 # Installation Guide for Face Recognition System
 
+Use ```install_dependencies.sh``` to setup your machine. If issues occur, the install guide below is referred to.
+
 ## Python Compatibility
 - Recommended: **Python 3.10.10**, which can be installed with deadsnakes for Linux.
 - Not compatible with Python 3.11 or newer.
