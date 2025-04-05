@@ -26,7 +26,7 @@ source ~/dlib_env/bin/activate
 
 cd dlib
 python setup.py install
-
+```
 ### Windows:
 Download dlib-19.22.99-cp310-cp310-win_amd64.whl from the dlib GitHub.
 
