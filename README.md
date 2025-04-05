@@ -27,6 +27,9 @@ This project aims to implement face recognition using dlib on a compact and chea
 ## **Software**
 
 ### **Dependencies**
+**Detailed setup instructions in [INSTALL.md](/INSTALL.md)**
+
+
 The Raspberry Pi runs Raspbian OS. A Python virtual environment is used for installing and isolating libraries required for face recognition. The system uses the `face_recognition` library, along with the following tools:
 
 1. **Python (3.9) with NumPy1.24**: The script runs within a virtual environment which ensures compatibility with dlib without having to downgrade the system-wide version of Python. Installed using `pyenv`.
