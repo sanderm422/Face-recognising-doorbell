@@ -28,6 +28,8 @@ echo "Upgrading pip inside venv..."
 pip install --upgrade pip
 
 echo "Installing Python libraries inside venv..."
+pip uninstall numpy
+pip install numpy==1.24
 pip install dlib
 pip install face_recognition
 pip install opencv-python
