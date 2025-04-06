@@ -1,15 +1,10 @@
-import os
-import cv2
-import numpy as np
+
 import face_recognition
-import requests
-from io import BytesIO
-from PIL import Image
+import cv2
+import time
+import numpy as np
 
-# CONFIG
-KNOWN_FACES_DIR = 'data/known_faces'
-VIDEO_STREAM_URL = 'http://192.168.0.238:5000/video_feed'
-
+# Converts images to 8bit RGB-format
 def convert_img(bgr_im):
     rgb_im = cv2.cvtColor(bgr_im,cv2.COLOR_BGR2RGB)
     rgb_im.astype('uint8')
@@ -34,49 +29,57 @@ sander_face_encoding = face_recognition.face_encodings(rgb_sanderim)[0]
 encodings_known_faces = [sander_face_encoding, pau_face_encoding]
 known_faces_names = ['Sander','Paulina']
 
-# MJPEG Stream reader
-def get_mjpeg_frame(url):
-    stream = requests.get(url, stream=True)
-    bytes_data = bytes()
-    for chunk in stream.iter_content(chunk_size=1024):
-        bytes_data += chunk
-        a = bytes_data.find(b'\xff\xd8')
-        b = bytes_data.find(b'\xff\xd9')
-        if a != -1 and b != -1:
-            jpg = bytes_data[a:b+2]
-            bytes_data = bytes_data[b+2:]
-            frame = cv2.imdecode(np.frombuffer(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
-            yield frame
+# Init video capture
+video_capture = cv2.VideoCapture(0)
 
-# Main loop
-for frame in get_mjpeg_frame(VIDEO_STREAM_URL):
-    if frame is None:
-        continue
-
+while True:
+    # Take a still frame (cv2 uses BGR) and convert to RGB so that face_recognition can process it    
+    ret, frame = video_capture.read()
     rgb_frame = convert_img(frame)
 
-    face_locations = face_recognition.face_locations(rgb_frame)
-    face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
+    print("Video Capture")
+    cv2.imshow('Video', frame)
 
+    print(rgb_frame.dtype)
+    print(rgb_frame.shape)
+
+    if rgb_frame is not None and len(rgb_frame.shape) == 3 and rgb_frame.shape[2] == 3:
+        face_locations = face_recognition.face_locations(rgb_frame)
+        face_encodings = face_recognition.face_encodings(rgb_frame)
+        # Proceed
+    else:
+        print("Frame is not valid for face recognition.")
+
+    # Loops through x- and y-axis of the images of located faces that is also paires (zip) with the correspending encodings
     for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
         
+        # Compare the images
         matches = face_recognition.compare_faces(encodings_known_faces, face_encoding)
         name = "Unknown"
 
+        # Get euclidian distances from the encodings of known faces to found faces  
         face_distances = face_recognition.face_distance(encodings_known_faces, face_encoding)
+        # Best match is smallest euclidean distance
         best_match_index = np.argmin(face_distances)
-
         if matches[best_match_index]:
             name = known_faces_names[best_match_index]
 
-        cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
-        cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 255, 0), cv2.FILLED)
+        # Draw box around the faces that were found
+        cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
+
+        # Add label with a name below the face
+        cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
+        # Display the resulting image
     cv2.imshow('Video', frame)
 
+    # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
+# Release handle to the webcam
+video_capture.release()
 cv2.destroyAllWindows()
+
