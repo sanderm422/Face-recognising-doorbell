@@ -18,11 +18,11 @@ def convert_img(bgr_im):
 # Load images with faces and create facial feature encodings
 
 # Image 1. Sander
-sanderimg = cv2.imread("sander.jpg")
+sanderimg = cv2.imread("data/known_faces/sander.jpg")
 rgb_sanderim = convert_img(sanderimg)
 
 # Image 2. Paulina
-pau = cv2.imread("pau.jpg")
+pau = cv2.imread("data/known_faces/pau.jpg")
 rgb_pau = convert_img(pau)
 
 print(rgb_pau.dtype)
