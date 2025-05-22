@@ -8,7 +8,8 @@ from PIL import Image
 
 # CONFIG
 KNOWN_FACES_DIR = 'data/known_faces'
-VIDEO_STREAM_URL = 'http://192.168.0.238:5000/video_feed'
+pi_ip = '192.168.0.238:5000'
+VIDEO_STREAM_URL = f'http://{pi_ip}/video_feed'
 
 def convert_img(bgr_im):
     rgb_im = cv2.cvtColor(bgr_im,cv2.COLOR_BGR2RGB)
@@ -24,8 +25,6 @@ rgb_sanderim = convert_img(sanderimg)
 # Image 2. Paulina
 pau = cv2.imread("data/known_faces/pau.jpg")
 rgb_pau = convert_img(pau)
-
-print(rgb_pau.dtype)
 
 pau_face_encoding = face_recognition.face_encodings(rgb_pau)[0]
 sander_face_encoding = face_recognition.face_encodings(rgb_sanderim)[0]
@@ -58,6 +57,7 @@ for frame in get_mjpeg_frame(VIDEO_STREAM_URL):
     face_locations = face_recognition.face_locations(rgb_frame)
     face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
 
+    
     for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
         
         matches = face_recognition.compare_faces(encodings_known_faces, face_encoding)
@@ -69,13 +69,65 @@ for frame in get_mjpeg_frame(VIDEO_STREAM_URL):
         if matches[best_match_index]:
             name = known_faces_names[best_match_index]
 
-        cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
-        cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 255, 0), cv2.FILLED)
-        font = cv2.FONT_HERSHEY_DUPLEX
-        cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
+        padding = 38
+        top = max(0, top - padding)
+        right = min(frame.shape[1], right + padding)
+        bottom = min(frame.shape[0], bottom + padding)
+        left = max(0, left - padding)
 
+
+        # Special heart drawing if recognized as Paulina
+        if name == "Paulina":
+            # Heart color
+            heart_color = (255, 0, 255)  # Pinkish color (BGR)
+
+            # Coordinates for center of heart
+            center_x = (left + right) // 2
+            center_y = (top + bottom) // 2
+            width = right - left
+            height = bottom - top
+
+            # Draw two circles for heart top
+            radius = min(width, height) // 6
+            cv2.circle(frame, (center_x - radius, center_y - radius), radius, heart_color, -1)
+            cv2.circle(frame, (center_x + radius, center_y - radius), radius, heart_color, -1)
+
+            # Draw the triangle for heart bottom
+            points = np.array([
+                [center_x - 2 * radius, center_y - radius],
+                [center_x + 2 * radius, center_y - radius],
+                [center_x, center_y + 2 * radius]
+            ])
+            cv2.fillPoly(frame, [points], heart_color)
+
+        else:
+            # Choose color based on if recognized or unknown
+            if name == "Unknown":
+                box_color = (0, 102, 255)  # Light red
+            else:
+                box_color = (0, 255, 0)    # Green
+
+            # Draw rectangle around face
+            cv2.rectangle(frame, (left, top), (right, bottom), box_color, 2)
+
+            # Draw rectangle behind name
+            cv2.rectangle(frame, (left, bottom - 35), (right, bottom), box_color, cv2.FILLED)
+
+
+        # Draw rectangle around face
+        cv2.rectangle(frame, (left, top), (right, bottom), box_color, 2)
+
+        # Draw rectangle behind name
+        cv2.rectangle(frame, (left, bottom - 35), (right, bottom), box_color, cv2.FILLED)
+
+        # Draw the name text (black color now)
+        font = cv2.FONT_HERSHEY_DUPLEX
+        cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (0, 0, 0), 1)
+
+    # Show the frame
     cv2.imshow('Video', frame)
 
+    # Exit on pressing 'q'
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 

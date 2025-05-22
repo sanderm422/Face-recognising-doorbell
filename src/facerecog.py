@@ -17,17 +17,17 @@ sanderimg = cv2.imread("sander.jpg")
 rgb_sanderim = convert_img(sanderimg)
 
 # Image 2. Paulina
-pau = cv2.imread("pau.jpg")
-rgb_pau = convert_img(pau)
+#pau = cv2.imread("pau.jpg")
+#rgb_pau = convert_img(pau)
 
-print(rgb_pau.dtype)
+#print(rgb_pau.dtype)
 
-pau_face_encoding = face_recognition.face_encodings(rgb_pau)[0]
+#pau_face_encoding = face_recognition.face_encodings(rgb_pau)[0]
 sander_face_encoding = face_recognition.face_encodings(rgb_sanderim)[0]
 
 # Facial feature encodings and names are stored in lists
-encodings_known_faces = [sander_face_encoding, pau_face_encoding]
-known_faces_names = ['Sander','Paulina']
+encodings_known_faces = [sander_face_encoding]
+known_faces_names = ['Sander']
 
 # Init video capture
 video_capture = cv2.VideoCapture(0)
