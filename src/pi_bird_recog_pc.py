@@ -11,7 +11,7 @@ VIDEO_STREAM_URL = 'http://192.168.0.238:5000/video_feed'  # update if needed
 MODEL_PATH = 'bird_model.pt'
 
 # Class names (must match your training labels order)
-CLASSES = ['blåmes', 'gråsparv', 'koltrast', 'talgoxe']
+CLASSES = ['blåmes', 'gråsparv', 'koltrast', 'none', 'talgoxe']
 
 # Preprocessing to match training
 transform = transforms.Compose([
