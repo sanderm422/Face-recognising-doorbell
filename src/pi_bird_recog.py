@@ -46,6 +46,7 @@ detection_confirmed = False
 try:
     while True:
         frame = picam2.capture_array()
+        frame = cv2.rotate(frame, cv2.ROTATE_180)  # Flip 180
         input_tensor = transform(frame).unsqueeze(0)
 
         with torch.no_grad():
@@ -68,6 +69,7 @@ try:
             print(f"[INFO] Confirmed bird detected: {predicted_class} ({confidence:.2f})")
             for i in range(NUM_SNAPSHOTS):
                 frame = picam2.capture_array()
+                frame = cv2.rotate(frame, cv2.ROTATE_180)  # Flip 180
                 filename = f"{SAVE_DIR}/{timestamp}_{predicted_class}_{i}.jpg"
                 cv2.imwrite(filename, frame)
                 print(f"[INFO] Saved snapshot: {filename}")

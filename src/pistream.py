@@ -25,7 +25,7 @@ def generate_frames():
             frame = cam.capture_array()
 
             # Convert NumPy array to PIL Image
-            img = Image.fromarray(frame)
+            img = Image.fromarray(frame).rotate(180)
 
             # Convert RGBA to RGB if needed
             if img.mode == 'RGBA':
