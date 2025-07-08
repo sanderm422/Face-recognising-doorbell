@@ -5,7 +5,7 @@ import requests
 from torchvision import transforms
 
 # URL to the Pi video stream
-VIDEO_STREAM_URL = 'http://192.168.0.238:5000/video_feed'  # update if needed
+VIDEO_STREAM_URL = 'http://192.168.0.234:5000/video_feed'  # update if needed
 
 # TorchScript model path
 MODEL_PATH = 'bird_model.pt'

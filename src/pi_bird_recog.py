@@ -10,7 +10,7 @@ from datetime import datetime
 # ====== CONFIG ======
 MODEL_PATH = "bird_model.pt"
 CLASSES = ['blåmes', 'gråsparv', 'koltrast', 'none', 'talgoxe']
-CONFIDENCE_THRESHOLD = 0.8
+CONFIDENCE_THRESHOLD = 0.4
 DETECTION_DURATION = 2  # seconds
 SNAPSHOT_INTERVAL = 1.0  # seconds between saved frames
 NUM_SNAPSHOTS = 5
@@ -78,7 +78,7 @@ try:
             last_detected_time = None
             detection_confirmed = False
 
-        time.sleep(0.1)
+        time.sleep(1)
 
 except KeyboardInterrupt:
     print("\n[INFO] Stopped by user.")
